@@ -16,27 +16,37 @@ class User(InitializerModel):
         super(User, self).__init__(arr)
 
     def _init_properties_custom(self, arr):
-        username = arr['user_info']['loginname']
-        user_id = arr['user_info']['user_id']
-        profile_pic_url = arr['user_info']['avatar']
-        intro = arr['user_info']['intro']
-        follower_count = int(arr['user_info']['fans'])
-        follow_count = int(arr['user_info']['following'])
-        country = arr['user_info']['country']
-        level = int(int(arr['user_info']['level']))
-        exp = int(int(arr['user_info']['exp']))
-        gift_revenue_history = int(int(arr['user_info']['gift_revenue_history']))
+        if 'user_info' in arr.keys():
+            username = arr['user_info']['loginname']
+            user_id = arr['user_info']['user_id']
+            profile_pic_url = arr['user_info']['avatar']
+            intro = arr['user_info']['intro']
+            follower_count = int(arr['user_info']['fans'])
+            follow_count = int(arr['user_info']['following'])
+            country = arr['user_info']['country']
+            level = int(int(arr['user_info']['level']))
+            exp = int(int(arr['user_info']['exp']))
+            gift_revenue_history = int(int(arr['user_info']['gift_revenue_history']))
+            self.username = username
+            self.user_id = user_id
+            self.profile_pic_url = profile_pic_url
+            self.follower_count = follower_count
+            self.follow_count = follow_count
+            self.country = country
+            self.level = level
+            self.exp = exp
+            self.gift_revenue_history = gift_revenue_history
 
-        self.username = username
-        self.user_id = user_id
-        self.profile_pic_url = profile_pic_url
-        self.intro = intro
-        self.follower_count = follower_count
-        self.follow_count = follow_count
-        self.country = country
-        self.level = level
-        self.exp = exp
-        self.gift_revenue_history = gift_revenue_history
+        else :
+            username = arr['author_info']['login_name']
+            user_id = arr['author_info']['user_id']
+            profile_pic_url = arr['author_info']['pic']
+            follower_count = int(arr['author_info']['fans'])
+
+            self.username = username
+            self.user_id = user_id
+            self.profile_pic_url = profile_pic_url
+            self.follower_count = follower_count
 
     def __str__(self):
         string = f"""
