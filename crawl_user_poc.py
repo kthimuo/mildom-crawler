@@ -1,5 +1,6 @@
 import requests
 import json
+from .mdcrawler.model.user import User
 
 url = 'https://cloudac.mildom.com/nonolive/gappserv/user/profileV2'
 
@@ -20,8 +21,9 @@ headers = {
 	'user-agent': ua
 }
 res = requests.get(url,headers=headers,params=params).json()
-print(res.keys())
 
-print(res['body'])
+user = User(res['body'])
+print(user)
+
 
 
