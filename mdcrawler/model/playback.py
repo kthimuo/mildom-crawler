@@ -1,23 +1,35 @@
 from .initializer_model import InitializerModel
+from .user import User
 import textwrap
 
-class PlayBack:
-    def __init__(self):
+class PlayBack(User):
+    def __init__(self,arr=None):
         self.live_id = None
-        self.username = None
-        self.user_id = None
-        self.country = None
         self.publish_time = None
         self.title = None
         self.view_num = None
         self.length = None
+        super(PlayBack,self).__init__(arr)
+        super()._init_properties_custom(arr)
+
+    def _init_properties_custom(self, arr):
+        live_id = arr['live_id']
+        publish_time = arr['publish_time']
+        title = arr['title']
+        view_num = arr['view_num']
+        length = arr['video_length']
+        self.live_id = live_id
+        self.publish_time = publish_time
+        self.title = title
+        self.view_num = view_num
+        self.length = length
+
     def __str__(self):
         string = f"""
         PlayBack info:
-        Id: {self.live_id if hasattr(self, 'live_id') else '-'}
+        LiveId: {self.live_id if hasattr(self, 'live_id') else '-'}
         Username: {self.username if hasattr(self, 'username') else '-'}
         UserId: {self.user_id if hasattr(self, 'user_id') else '-'}
-        Country: {self.country if hasattr(self, 'country') else '-'}
         PublishTime: {self.publish_time if hasattr(self, 'publish_time') else '-'}
         Title: {self.title if hasattr(self, 'title') else '-'}
         ViewNum: {self.view_num if hasattr(self, 'view_num') else '-'}
@@ -25,10 +37,6 @@ class PlayBack:
         """
         return textwrap.dedent(string)
 
-
-if __name__ == '__main__':
-    playback = PlayBack()
-    print(playback)
 
 
 
