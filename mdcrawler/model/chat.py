@@ -1,15 +1,16 @@
 from .user import User
+from .playback import PlayBack
 import textwrap
 import json
 
-class Chat(User):
-    def __init__(self,arr):
+class Chat(PlayBack):
+    def __init__(self,arr=None):
         if arr:
             arr['message'] = json.loads(arr['message'])
+            super().__init__(arr,prop='chat')
             super()._init_properties_custom(arr,prop='chat')
-            self._init_properties_custom(arr)
 
-    def _init_properties_custom(self, arr):
+    def _init_properties_custom(self, arr,prop=None):
         chat_text = arr['message']['msg']
         chat_id = arr['message']['msgId']
         chat_time = int(int(arr['message']['time'])/1000)
@@ -28,7 +29,7 @@ class Chat(User):
         ChatTimeOffset: {self.chat_time_offset if hasattr(self, 'chat_time_offset') else '-'}
         Username: {self.username if hasattr(self, 'username') else '-'}
         UserId: {self.user_id if hasattr(self, 'user_id') else '-'}
-        Level: {self.level if hasattr(self, 'level') else '-'}
+        PlayBackId: {self.pbid if hasattr(self, 'pbid') else '-'}
         """
         return textwrap.dedent(string)
 

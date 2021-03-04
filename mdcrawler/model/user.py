@@ -2,9 +2,14 @@ from .initializer_model import InitializerModel
 import textwrap
 
 class User(InitializerModel):
-    def __init__(self,arr=None):
+    def __init__(self,arr=None,prop=None):
+        if not prop:
+            prop = 'user'
         if arr :
-            super().__init__(arr,prop='user')
+#            if prop == 'user':
+            super().__init__(arr,prop=prop)
+#            else :
+                
 
     def _init_properties_custom(self, arr, prop):
         if prop == 'user':
@@ -40,15 +45,11 @@ class User(InitializerModel):
             self.follower_count = follower_count
             
         elif prop == 'chat' :
-            username = arr['userName']
-            user_id = arr['userId']
-            profile_pic_url = arr['userImg']
-            level = arr['level']
+            username = arr['message']['userName']
+            user_id = arr['message']['userId']
 
             self.username = username
             self.user_id = user_id
-            self.profile_pic_url = profile_pic_url
-            self.level = level
 
 
     def __str__(self):
