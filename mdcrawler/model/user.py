@@ -3,20 +3,11 @@ import textwrap
 
 class User(InitializerModel):
     def __init__(self,arr=None):
-        self.username = None
-        self.user_id = None
-        self.profile_pic_url = None
-        self.intro = None
-        self.follower_count = None
-        self.follow_count = None
-        self.country = None
-        self.level = None
-        self.exp = None
-        self.gift_revenue_history = None
-        super(User, self).__init__(arr)
+        if arr :
+            super().__init__(arr,prop='user')
 
-    def _init_properties_custom(self, arr):
-        if 'user_info' in arr.keys():
+    def _init_properties_custom(self, arr, prop):
+        if prop == 'user':
             username = arr['user_info']['loginname']
             user_id = arr['user_info']['user_id']
             profile_pic_url = arr['user_info']['avatar']
@@ -37,7 +28,7 @@ class User(InitializerModel):
             self.exp = exp
             self.gift_revenue_history = gift_revenue_history
 
-        else :
+        elif prop == 'playback' :
             username = arr['author_info']['login_name']
             user_id = arr['author_info']['user_id']
             profile_pic_url = arr['author_info']['pic']
@@ -47,6 +38,18 @@ class User(InitializerModel):
             self.user_id = user_id
             self.profile_pic_url = profile_pic_url
             self.follower_count = follower_count
+            
+        elif prop == 'chat' :
+            username = arr['userName']
+            user_id = arr['userId']
+            profile_pic_url = arr['userImg']
+            level = arr['level']
+
+            self.username = username
+            self.user_id = user_id
+            self.profile_pic_url = profile_pic_url
+            self.level = level
+
 
     def __str__(self):
         string = f"""

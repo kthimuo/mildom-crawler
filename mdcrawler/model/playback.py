@@ -4,17 +4,13 @@ import textwrap
 
 class PlayBack(User):
     def __init__(self,arr=None):
-        self.live_id = None
-        self.publish_time = None
-        self.title = None
-        self.view_num = None
-        self.length = None
-        super(PlayBack,self).__init__(arr)
-        super()._init_properties_custom(arr)
+        if arr:
+            super()._init_properties_custom(arr,prop='playback')
+            self._init_properties_custom(arr)
 
     def _init_properties_custom(self, arr):
         live_id = arr['live_id']
-        publish_time = arr['publish_time']
+        publish_time = int(int(arr['publish_time'])/1000)
         title = arr['title']
         view_num = arr['view_num']
         length = arr['video_length']
