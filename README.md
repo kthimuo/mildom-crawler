@@ -2,6 +2,12 @@
 
 This is a Mildom(https://www.mildom.com/) crawler written in Python.
 
+## Install
+
+```
+pip install mdcrawler
+```
+
 ## Example
 
 ・Getting user info
