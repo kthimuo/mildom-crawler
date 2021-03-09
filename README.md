@@ -2,14 +2,17 @@
 
 This is a Mildom(https://www.mildom.com/) crawler written in Python.
 
+## Install
+
+```
+pip install mdcrawler
+```
+
 ## Example
 
 ・Getting user info
 
 ```
-import sys
-#add appropriate path on your env
-sys.path.append('..')
 from mdcrawler.mildom import Mildom
 
 uid = '10084097'
@@ -34,9 +37,6 @@ GiftRevenue: 2853554
 ・Getting playbacks by user_id
 
 ```
-import sys
-#add appropriate path on your env
-sys.path.append('..')
 from mdcrawler.mildom import Mildom
 
 uid = '10084097'
@@ -64,8 +64,6 @@ Length: 8368110
 ・Getting chats on the playback
 
 ```
-import sys
-sys.path.append('..')
 from mdcrawler.mildom import Mildom
 
 pbid = '10105254-1610795759'
