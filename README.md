@@ -76,7 +76,7 @@ print(chats[0])
 
 print('-----')
 
-chats = mildom.get_chats_by_pbid(pbid)
+chats = mildom.get_playbackchats_by_pbid(pbid)
 print(len(chats))
 print(chats[-1])
 
