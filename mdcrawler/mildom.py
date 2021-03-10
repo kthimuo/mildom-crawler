@@ -106,7 +106,6 @@ class Mildom:
 
 
     def get_live_meta_by_uid(self,uid):
-        url = 'https://cloudac.mildom.com/nonolive/gappserv/live/enterstudio'
         params = {
                 'user_id':uid,
                 '__platform':'web',
@@ -115,7 +114,7 @@ class Mildom:
                 'User-Agent':self.user_agent
                 }
 
-        arr = requests.get(url,params=params,headers=headers).json()['body']
+        arr = requests.get(endpoints.LIVE_META_URL,params=params,headers=headers).json()['body']
         live = Live(arr)
         return live
 
