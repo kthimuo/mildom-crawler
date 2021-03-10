@@ -6,6 +6,7 @@ import json
 import time
 from .model.playback import PlayBack
 from .model.user import User
+from .model.chat import PlayBackChat
 from .model.chat import RoomChat
 from .model.room import Room
 from . import endpoints
@@ -99,7 +100,7 @@ class Mildom:
                 detail = res["body"]["models"][i]["detail"]
                 for arr in detail:
                     arr['pbid'] = pbid
-                    chat = Chat(arr)
+                    chat = PlayBackChat(arr)
                     cnt +=1
                     chats.append(chat)
             next_time = res["body"]["models"][-1]["summary"]["end_offset_ms"]
