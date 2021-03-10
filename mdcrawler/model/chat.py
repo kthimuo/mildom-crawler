@@ -7,8 +7,8 @@ class Chat(PlayBack):
     def __init__(self,arr=None):
         if arr:
             arr['message'] = json.loads(arr['message'])
-            super().__init__(arr,prop='chat')
-            super()._init_properties_custom(arr,prop='chat')
+            super(Chat,self).__init__(arr,prop='chat')
+            super(Chat,self)._init_properties_custom(arr,prop='chat')
 
     def _init_properties_custom(self, arr,prop=None):
         chat_text = arr['message']['msg']
