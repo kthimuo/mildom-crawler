@@ -7,8 +7,8 @@ class PlayBack(User):
         if not prop:
             prop = 'playback'
         if arr:
-            super().__init__(arr,prop=prop)
-            super()._init_properties_custom(arr,prop=prop)
+            super(PlayBack,self)._init_properties_custom(arr,prop=prop)
+            super(PlayBack,self).__init__(arr,prop=prop)
 
 
     def _init_properties_custom(self, arr, prop):

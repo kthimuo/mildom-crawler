@@ -6,7 +6,7 @@ class User(InitializerModel):
         if not prop:
             prop = 'user'
         if arr :
-            super().__init__(arr,prop=prop)
+            super(User,self).__init__(arr,prop=prop)
                 
 
     def _init_properties_custom(self, arr, prop):
@@ -36,7 +36,6 @@ class User(InitializerModel):
             user_id = arr['author_info']['user_id']
             profile_pic_url = arr['author_info']['pic']
             follower_count = int(arr['author_info']['fans'])
-
             self.username = username
             self.user_id = user_id
             self.profile_pic_url = profile_pic_url
