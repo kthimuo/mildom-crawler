@@ -12,6 +12,7 @@ setuptools.setup(
     maintainer="kthimuo",
     author='kthimuo',
     url='https://github.com/kthimuo/mildom-crawler',
+    install_requires='requirements.txt',
     classifiers=[
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries'
