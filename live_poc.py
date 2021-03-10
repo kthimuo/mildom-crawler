@@ -1,3 +1,4 @@
+import requests
 import websocket
 import json
 import _thread
@@ -5,12 +6,23 @@ import time
 
 def on_message(ws, message):
     data = json.loads(message)
-#    if data['cmd'] == 'onAdd':
     timestamp = int(time.time())
     print(timestamp)
     print(data)
     print('========')
-room_id = '10658167'
+room_id = '10920579'
+url = 'https://cloudac.mildom.com/nonolive/gappserv/live/enterstudio'
+params = {
+        'user_id':room_id,
+        '__platform':'web',
+        }
+headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36'
+        }
+
+res = requests.get(url,params=params,headers=headers)
+print(res.text)
+
 url = 'wss://jp-room1.mildom.com'
 user_agent =  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36'
 
