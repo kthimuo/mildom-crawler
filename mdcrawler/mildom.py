@@ -4,6 +4,7 @@ import time
 from .model.playback import PlayBack
 from .model.user import User
 from .model.chat import Chat
+from .model.live import Live
 from . import endpoints
 
 class Mildom:
@@ -102,6 +103,25 @@ class Mildom:
         if  count:
             chats = chats[:count]
         return chats    
+
+
+    def get_live_meta_by_uid(self,uid):
+        url = 'https://cloudac.mildom.com/nonolive/gappserv/live/enterstudio'
+        params = {
+                'user_id':uid,
+                '__platform':'web',
+                }
+        headers = {
+                'User-Agent':self.user_agent
+                }
+
+        arr = requests.get(url,params=params,headers=headers).json()['body']
+        live = Live(arr)
+        return live
+
+    def view_live(self,uid):
+        live = self.get_live_meta_by_uid(uid)
+        print(live)
 
 
         
