@@ -41,14 +41,14 @@ class User(InitializerModel):
             self.profile_pic_url = profile_pic_url
             self.follower_count = follower_count
             
-        elif prop == 'chat' :
+        elif prop == 'playback_chat' :
             username = arr['message']['userName']
             user_id = arr['message']['userId']
 
             self.username = username
             self.user_id = user_id
 
-        elif prop == 'live' :
+        elif prop == 'room' :
             username = arr['loginname']
             user_id = arr['user_id']
             profile_pic_url = arr['avatar']
@@ -67,6 +67,19 @@ class User(InitializerModel):
             self.level = level
             self.exp = exp
             self.gift_revenue_history = gift_revenue_history
+
+        elif prop == 'room_chat' :
+            username = arr['userName']
+            user_id = arr['userId']
+            profile_pic_url = arr['userImg']
+            level = arr['level']
+            fans_level = arr['fansLevel']
+
+            self.username = username
+            self.user_id = user_id
+            self.profile_pic_url = profile_pic_url
+            self.level = level
+            self.fans_level = fans_level
             
 
     def __str__(self):

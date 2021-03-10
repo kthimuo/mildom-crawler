@@ -2,13 +2,11 @@ import sys
 sys.path.append('..')
 from mdcrawler.mildom import Mildom
 
-pbid = '10105254-1610795759'
-count = 100
+pbid = '10115448-c0b6qgntc1nt495snrp0'
+count = 3 
 mildom = Mildom()
-chats = mildom.get_chats_by_pbid(pbid,count=count)
-print(len(chats))
-print(chats[0])
-print('-----')
-chats = mildom.get_chats_by_pbid(pbid)
-print(len(chats))
-print(chats[-1])
+chats = mildom.get_playback_chats_by_pbid(pbid,count=count)
+
+for chat in chats:
+    print(chat)
+    print('-----')

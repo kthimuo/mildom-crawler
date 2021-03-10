@@ -1,14 +1,21 @@
+import os
 import requests
+import websocket
+import _thread
 import json
 import time
 from .model.playback import PlayBack
 from .model.user import User
-from .model.chat import Chat
+from .model.chat import PlayBackChat
+from .model.chat import RoomChat
+from .model.room import Room
 from . import endpoints
 
 class Mildom:
     def __init__(self):
         self.__req = requests
+        self.__ws = requests
+        self.__ws = websocket
         self.user_agent =  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36'
         self.sleep_sec = 1.0
 
@@ -58,7 +65,7 @@ class Mildom:
         length = int(res['body']['playback']['video_length'])
         return length
 
-    def get_chats_by_pbid(self, pbid, count=None):
+    def get_playback_chats_by_pbid(self, pbid, count=None):
         '''
         pbid -> PlayBackId
         '''
@@ -93,7 +100,7 @@ class Mildom:
                 detail = res["body"]["models"][i]["detail"]
                 for arr in detail:
                     arr['pbid'] = pbid
-                    chat = Chat(arr)
+                    chat = PlayBackChat(arr)
                     cnt +=1
                     chats.append(chat)
             next_time = res["body"]["models"][-1]["summary"]["end_offset_ms"]
@@ -102,6 +109,79 @@ class Mildom:
         if  count:
             chats = chats[:count]
         return chats    
+
+
+    def get_room_meta_by_uid(self,uid):
+        params = {
+                'user_id':uid,
+                '__platform':'web',
+                }
+        headers = {
+                'User-Agent':self.user_agent
+                }
+
+        arr = requests.get(endpoints.LIVE_META_URL,params=params,headers=headers).json()['body']
+        room = Room(arr)
+        return room
+    
+    def observe_room(self,uid,path_to_save='./',view_order=('viewer_count','room_chat'),save_order=('viewer_count','room_chat')):
+        room = self.get_room_meta_by_uid(uid)
+        start_timestamp = str(room.start_timestamp)
+        if path_to_save :
+            save_dir = path_to_save + '/' + uid
+            os.makedirs(save_dir,exist_ok=True)
+
+            chat_file_name = save_dir +'/'+ start_timestamp + '_chats.txt' 
+            viewer_count_file_name = save_dir +'/' + start_timestamp + '_viewer_count.txt' 
+
+        data ={
+                "guestId":"xxx",
+                "roomId":int(uid),
+                "cmd":"enterRoom",
+                }
+        def on_message(ws, message):
+            timestamp = int(time.time())
+            arr = json.loads(message)
+            if arr['cmd'] == 'onChat':
+                room_chat = RoomChat(arr)
+                if path_to_save:
+                    with open(chat_file_name, 'a') as f:
+                        c = json.dumps(room_chat.__dict__)
+                        print(c, file=f)
+                        print(room_chat)
+
+            if (arr['cmd'] == 'onAdd') or (arr['cmd'] == 'userCount'):
+                viewer_count = arr['userCount']
+                result_dict = {
+                        'timestamp':str(int(time.time())),
+                        'viewer_count':viewer_count
+                        }
+                if path_to_save:
+                    with open(viewer_count_file_name,'a') as ff:
+                        result = json.dumps(result_dict) 
+                        print(result, file=ff)
+                        print(result)
+                        
+                
+
+
+        def on_open(ws):
+            def run(*args):
+                ws.send(json.dumps(data))
+            _thread.start_new_thread(run, ())
+
+        ws = websocket.WebSocketApp(
+            endpoints.LIVE_URL ,
+            on_message = on_message,
+        )
+        ws.on_open = on_open
+        ws.run_forever()
+
+        
+    
+
+
+
 
 
         

@@ -24,10 +24,12 @@ class PlayBack(User):
             self.view_num = view_num
             self.length = int(length)
 
-        elif prop == 'chat':
+        elif prop == 'playback_chat':
             pbid = arr['pbid']
             self.pbid = pbid
 
+        elif prop == 'live':
+            pass
     def __str__(self):
         string = f"""
         PlayBack info:
