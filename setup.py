@@ -3,7 +3,7 @@ from pathlib import Path
 
 setuptools.setup(
     name="mdcrawler",
-    version="1.1.2",
+    version="1.1.3",
     packages=setuptools.find_packages(),
     description=('Mildom(https://www.mildom.com/) crawler written in Python.'),
     long_description=Path("README.md").read_text(),
