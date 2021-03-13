@@ -133,6 +133,12 @@ class Mildom:
 
             chat_file_name = save_dir +'/'+ start_timestamp + '_chats.txt' 
             viewer_count_file_name = save_dir +'/' + start_timestamp + '_viewer_count.txt' 
+            meta_file_name = save_dir +'/' + start_timestamp + '_meta.txt' 
+            with open(meta_file_name, 'a') as f:
+                c = json.dumps(room.__dict__)
+                print(c, file=f)
+                print(room)
+
 
         data ={
                 "guestId":"xxx",
