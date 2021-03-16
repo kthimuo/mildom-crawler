@@ -5,6 +5,9 @@ This is a Mildom(https://www.mildom.com/) crawler written in Python.
 ## Install
 
 ```
+pip install websocket-client
+```
+```
 pip install mdcrawler
 ```
 
@@ -76,7 +79,7 @@ print(chats[0])
 
 print('-----')
 
-chats = mildom.get_playbackchats_by_pbid(pbid)
+chats = mildom.get_playback_chats_by_pbid(pbid)
 print(len(chats))
 print(chats[-1])
 
