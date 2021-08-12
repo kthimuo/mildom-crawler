@@ -21,8 +21,9 @@ class Mildom:
 
     def get_playbacks_by_uid(self, uid, count=5):
         params = {
-        'user_id' : uid,
-        'limit' : count,
+            'user_id' : uid,
+            'limit' : count,
+            '__platform' : 'web'
         }
         headers = {
             'user-agent': self.user_agent
