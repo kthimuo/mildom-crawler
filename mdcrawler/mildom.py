@@ -20,23 +20,37 @@ class Mildom:
         self.sleep_sec = 1.0
 
     def get_playbacks_by_uid(self, uid, count=5):
-        params = {
-            'user_id' : uid,
-            'limit' : count,
-            '__platform' : 'web'
-        }
         headers = {
             'user-agent': self.user_agent
         }
-        res = self.__req.get(
-                endpoints.PLAYBACK_LIST_URL,
-                headers=headers,
-                params=params).json()
         playbacks = []
-        for p in res['body']:
-            playback = PlayBack(p)
-            playbacks.append(playback)
-        return playbacks
+        page = 1
+        done = False
+        while True:
+            if (len(playbacks) >= count) or done:
+                break
+            params = {
+                'user_id' : uid,
+                'limit' : 30,
+                '__platform' : 'web',
+                'page' : page
+            }
+            res = self.__req.get(
+                    endpoints.PLAYBACK_LIST_URL,
+                    headers=headers,
+                    params=params).json()
+            if len(res['body']) != 0:
+                for p in res['body']:
+                    playback = PlayBack(p)
+                    if not playback in playbacks:
+                        playbacks.append(playback)
+                    else :
+                        done = True
+                        break
+            else : 
+                done = True
+            page += 1
+        return playbacks[:count]
             
     def get_account_by_uid(self, uid):
         params = {
